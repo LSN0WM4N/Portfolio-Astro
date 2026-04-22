@@ -1,0 +1,102 @@
+---
+interface Props {
+  text: string;
+  delay?: number;
+  typeDelay?: number;
+  class?: string;
+}
+
+const {
+  text,
+  delay = 5000,
+  typeDelay = 130,
+  class: className,
+} = Astro.props;
+---
+
+<span class={`typing-root inline-block ${className ?? ""}`} data-text={text} data-delay={delay} data-type-delay={typeDelay}>
+  <span class="typing-text"></span>
+  <span class="typing-cursor inline-block w-2 text-primary opacity-100">│</span>
+</span>
+
+<script>
+  function initTyping(root: HTMLElement) {
+    const text = root.dataset.text ?? "";
+    const delay = Number(root.dataset.delay ?? 5000);
+    const typeDelay = Number(root.dataset.typeDelay ?? 130);
+
+    const textEl = root.querySelector<HTMLElement>(".typing-text")!;
+    const cursorEl = root.querySelector<HTMLElement>(".typing-cursor")!;
+
+    let actual = "";
+    let isWriting = true;
+    let animTimeout: ReturnType<typeof setTimeout>;
+
+    const blinkInterval = setInterval(() => {
+      const isNotPaused = actual.length !== 0 && actual.length !== text.length;
+      if (isNotPaused) {
+        cursorEl.style.opacity = "1";
+      } else {
+        cursorEl.style.opacity = cursorEl.style.opacity === "0" ? "1" : "0";
+      }
+    }, 500);
+
+    function render() {
+      textEl.textContent = actual;
+      if (actual === text) {
+        textEl.classList.add("text-cyan-500");
+      } else {
+        textEl.classList.remove("text-cyan-500");
+      }
+    }
+
+    function animate() {
+      const size = actual.length;
+
+      if (isWriting) {
+        if (size < text.length) {
+          animTimeout = setTimeout(() => {
+            actual = text.slice(0, size + 1);
+            render();
+            animate();
+          }, typeDelay);
+        } else {
+          animTimeout = setTimeout(() => {
+            isWriting = false;
+            animate();
+          }, delay);
+        }
+      } else {
+        if (size > 0) {
+          animTimeout = setTimeout(() => {
+            actual = text.slice(0, size - 1);
+            render();
+            animate();
+          }, typeDelay);
+        } else {
+          animTimeout = setTimeout(() => {
+            isWriting = true;
+            animate();
+          }, delay);
+        }
+      }
+    }
+
+    animate();
+
+    const observer = new MutationObserver(() => {
+      if (!document.contains(root)) {
+        clearInterval(blinkInterval);
+        clearTimeout(animTimeout);
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  document.querySelectorAll<HTMLElement>(".typing-root").forEach(initTyping);
+
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll<HTMLElement>(".typing-root").forEach(initTyping);
+  });
+</script>

@@ -1,0 +1,124 @@
+---
+import GraphManager from "../utils/graph-manager";
+---
+
+<main class="flex flex-col max-w-5xl mx-auto gap-8 p-6">
+  <h3 class="text-3xl font-bold mx-auto">Projects</h3>
+
+  <canvas id="projects-canvas"></canvas>
+</main>
+
+<script>
+  import type { Edge, Node , Project } from "../types/projects";
+  import GraphManager from "../utils/graph-manager";
+
+  const canvas = document.querySelector("#projects-canvas") as HTMLCanvasElement;
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = 800;
+  canvas.height = 500;
+
+  const graph = new GraphManager(canvas.width, canvas.height);
+
+  graph.addNode(100, 100, {
+    title: "1",
+    description: "Description",
+    github: "https://github.com/LSN0WM4N/ConwaysLifeGame",
+    tech: ["JavaScript", "HTML", "Node.js"],
+    featured: false,
+    date: "2023-01-01",
+    image: "images/conway-plane.webp",
+  });
+  graph.addNode(300, 150, {
+    title: "2",
+    description: "Description",
+    github: "https://github.com/LSN0WM4N/ConwaysLifeGame",
+    tech: ["JavaScript", "HTML", "Node.js"],
+    featured: false,
+    date: "2023-01-01",
+    image: "images/conway-plane.webp",
+  });
+  graph.addNode(200, 300, {
+    title: "3",
+    description: "Description",
+    github: "https://github.com/LSN0WM4N/ConwaysLifeGame",
+    tech: ["JavaScript", "HTML", "Node.js"],
+    featured: false,
+    date: "2023-01-01",
+    image: "images/conway-plane.webp",
+  });
+
+  graph.addEdge(1, 2);
+  graph.addEdge(2, 3);
+  graph.addEdge(1, 3);
+
+  function drawNode(node: Node<Project>) {
+    if (!ctx) return;
+
+    const { x, y } = node.coords;
+
+    ctx.beginPath();
+    // ctx.arc(x, y, 20, 0, Math.PI * 2);
+    ctx.fillRect(x, y, 20, 20);
+    ctx.fillStyle = "#4f46e5";
+    ctx.fill();
+
+
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(node.data.title, x, y);
+  }
+
+  function drawEdge(edge: Edge) {
+    if (!ctx) return;
+
+    const nodes = graph.getNodes();
+    const from = nodes.find(n => n.id == edge.from);
+    const to = nodes.find(n => n.id == edge.to);
+
+    if (!from || !to) return
+
+    ctx.beginPath();
+    ctx.moveTo(from.coords.x, from.coords.y);
+    ctx.lineTo(to.coords.x, to.coords.y);
+    ctx.strokeStyle = "#9ca3af";
+    ctx.stroke();
+  }
+
+  function draw() {
+    if (!ctx) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    graph.getEdges().forEach(drawEdge);
+    graph.getNodes().forEach(drawNode);
+  }
+
+  function loop() {
+    graph.move(); // física
+    draw(); // render
+
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+
+  canvas.addEventListener("dblclick", (e) => {
+    const rect = canvas.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // const { x, y } = rect;
+
+    console.log(rect, x, y);
+
+    const node = graph.hitTestNode(x, y, 50);
+
+    console.log(node, graph.getNodes());
+    
+    if (node) 
+      graph.togglePin(node.id);
+  });
+</script>

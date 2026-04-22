@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+
+// ICONS //
+import GHIcon from "@icons/github.svg";
+import INIcon from "@icons/linkedin.svg";
+import CFIcon from "@icons/codeforces.svg";
+import TGIcon from "@icons/telegram.svg";
+
+// IMAGES //
+import BannerImage from '@images/sn0wm4n-banner.webp';
+
+// COMPONENTS //
+import IconLink from './banner/icon-link.astro';
+import CvButton from './banner/cv-button.astro';
+---
+
+<main class="flex items-center justify-center h-dvh">
+  <Image 
+    src={ BannerImage } 
+    alt="SN0WM4N Banner"
+    class="absolute -left-60 scale-150 opacity-40"
+  />
+  <section class="max-w-160">
+    <h3 class="text-5xl font-bold">
+      Hello, I'm <code class="text-cyan-500">SN0WM4N</code>
+    </h3>
+    <h4 class="text-3xl">
+      Francis Rodriguez
+    </h4>
+
+    <ul class="my-8 flex gap-2">
+      <IconLink icon={ GHIcon } link='https://github.com/LSN0WM4N' />
+      <IconLink icon={ INIcon } link='https://www.linkedin.com/in/francis-jose-rodriguez-ronda-30b433292/' />
+      <IconLink icon={ TGIcon } link='https://t.me/LSN0WM4N' />
+      <IconLink icon={ CFIcon } link='https://codeforces.com/' />
+      <CvButton />
+    </ul>
+
+    <p class="mb-4">
+      A web developer with a solid foundation in algorithms and 
+      competitive programming. I love finding the most efficient, 
+      clean, and elegant way to solve any problem—from 
+      algorithmic challenges to building complete applications.
+    </p>
+    <p class="mb-4">
+      I work well under pressure, stay calm in the face of 
+      challenges, and look for creative solutions without 
+      losing technical focus. I strongly believe in teamwork: 
+      I help when needed and ask for help when it's the 
+      best way to move forward.
+    </p>
+    <p class="text-cyan-500">
+      You stop growing when you stop learning.
+    </p>
+  </section>
+</main>

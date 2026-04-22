@@ -1,0 +1,44 @@
+---
+import { Image } from "astro:assets";
+
+import ProfileImage from "../../public/images/sn0wm4n-profile.webp";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="">
+  <div class="flex justify-between">
+    <section class="flex">
+      <Image src={ ProfileImage } alt="Profile image" />
+      <div>
+
+        <h4>Francis Rodriguez</h4>
+        <h5>SN0WM4N</h5>
+    
+        <p>
+          Message me anytime. I'm happy to receive feedback, 
+          discuss projects, collaborate on ideas, and offer 
+          assistance whenever needed.
+        </p>
+    
+        <code>rodriguezrondafrancis@gmail.com</code>
+        <span>Barcelona, Spain</span>
+        <span>Full Stack Developer & Competitive Programmer</span>
+        <span>Available for work</span>
+      </div>
+    </section>
+    <section>
+      <form>
+        <label for="email">Your email</label>
+        <input type="text" name="email">
+        <label for="message">Message</label>
+        <input type="text" name="message">
+        <button>Send your message</button>
+      </form>
+    </section>
+  </div>
+
+  <hr />
+
+  { year } Francis Rodriguez. 
+</footer>

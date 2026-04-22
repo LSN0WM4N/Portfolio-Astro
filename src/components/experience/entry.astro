@@ -1,0 +1,33 @@
+---
+interface Props {
+  date: string | [string] | [string, string];
+  team: string;
+  description: string;
+}
+
+const { date: rawDate, team, description } = Astro.props;
+// Ensure date is [string] | [string, string]
+const date = typeof rawDate === 'string' ? [rawDate] : rawDate;
+---
+
+
+<article 
+  class="group flex flex-col gap-2 mb-8 border-l-2 border-cyan-500/30 pl-4 
+       hover:border-cyan-500 transition-colors"
+  >
+  <div class="flex justify-between">
+    <h4 class="text-xl font-semibold text-white group-hover:text-cyan-500 transition-colors">
+      { team }
+    </h4>
+    <span class="text-sm text-gray-400 group-hover:text-cyan-500">
+      { date.length === 1 
+        ? date[0] 
+        : `${date[0]} — ${date[1]}` 
+      }
+    </span>
+  </div>
+
+  <p class="text-gray-400 text-md leading-relaxed">
+    { description }
+  </p>
+</article>

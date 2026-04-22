@@ -1,0 +1,53 @@
+---
+import Entry from "./experience/entry.astro";
+---
+
+<main class="flex flex-col mx-auto max-w-200 mb-16"> 
+  <h3 class="text-3xl mx-auto mb-10"> Experience </h3>
+
+  <Entry 
+    date={['Apr 2025']} 
+    team="Freelance"
+    description={`
+      Next.js landing page optimized for local 
+      SEO and Google ranking. Built to capture 
+      organic traffic and seamlessly redirect 
+      users to the bar's Instagram, centralizing 
+      customer contact and digital visibility.
+    `}
+  />
+
+  <Entry 
+    date={['August 2025', 'December 2025']} 
+    team="Manivis"
+    description={`
+      Development of web applications using NextJs and 
+      Express frameworks. Full stack work, multimedia 
+      management, and process optimization.
+    `}
+  />
+
+  <Entry 
+    date={['October 2024', 'June 2025']} 
+    team="CS Teacher Assistant"
+    description={`
+      Training students for algorithmic competitions. 
+      Developing platforms for practicing coding. 
+      Analyzing algorithms and data structures.
+    `}
+  />
+  <Entry 
+    date={['September 2021', 'April 2024']} 
+    team="Student"
+    description={`
+      Get started with dozens of web components and 
+      interactive elements built on top of Tailwind CSS. 
+      I combined my high school studies with programming 
+      studies, delving deeper into the study of 
+      algorithms, data structures, computational 
+      complexity, and dynamic programming. During this 
+      time, I won a silver medal at the OII and 
+      participated in the IOI.
+    `}
+  />
+</main>

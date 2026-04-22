@@ -1,0 +1,20 @@
+---
+import type { SvgComponent } from "astro/types";
+
+interface Props {
+  icon: SvgComponent;
+  link: string;
+}
+
+const { icon: Icon, link } = Astro.props;
+---
+
+<a class="group" target="_blank" href={ link }>
+  <Icon
+    class="w-10 h-10 p-2 rounded-md 
+      text-gray-300 border border-gray-300/40 
+      group-hover:text-cyan-500 group-hover:border-cyan-500 
+      group-hover:scale-105 duration-200
+      transition-all"
+  />
+</a>

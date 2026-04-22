@@ -1,0 +1,11 @@
+---
+interface Props {
+  section: string;
+};
+
+const { section } = Astro.props;
+---
+
+<a href={`#${ section }`}>
+  <slot></slot>
+</a>
