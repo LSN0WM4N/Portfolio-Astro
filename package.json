@@ -12,11 +12,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.2.2",
-    "astro": "^6.1.4",
-    "tailwindcss": "^4.2.2"
+    "@tailwindcss/vite": "4.2.2",
+    "astro": "6.1.4",
+    "tailwindcss": "4.2.2"
   },
   "devDependencies": {
-    "@types/node": "^25.6.0"
+    "@types/node": "25.6.0"
   }
 }

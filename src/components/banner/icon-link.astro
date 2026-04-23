@@ -1,5 +1,6 @@
 ---
 import type { SvgComponent } from "astro/types";
+import Button from "../ui/button.astro";
 
 interface Props {
   icon: SvgComponent;
@@ -9,12 +10,14 @@ interface Props {
 const { icon: Icon, link } = Astro.props;
 ---
 
-<a class="group" target="_blank" href={ link }>
-  <Icon
-    class="w-10 h-10 p-2 rounded-md 
-      text-gray-300 border border-gray-300/40 
-      group-hover:text-cyan-500 group-hover:border-cyan-500 
-      group-hover:scale-105 duration-200
-      transition-all"
-  />
-</a>
+<Button variant="outline" data-link={link}>
+  <Icon class="w-6 h-6" />
+</Button>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-link]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      window.open(btn.dataset.link, "_blank");
+    });
+  });
+</script>

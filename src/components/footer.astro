@@ -1,44 +1,70 @@
 ---
 import { Image } from "astro:assets";
-
 import ProfileImage from "../../public/images/sn0wm4n-profile.webp";
 
 const year = new Date().getFullYear();
 ---
 
-<footer class="">
-  <div class="flex justify-between">
-    <section class="flex">
-      <Image src={ ProfileImage } alt="Profile image" />
-      <div>
+<footer class="px-8 sm:px-10 pt-12 pb-7">
 
-        <h4>Francis Rodriguez</h4>
-        <h5>SN0WM4N</h5>
-    
-        <p>
-          Message me anytime. I'm happy to receive feedback, 
-          discuss projects, collaborate on ideas, and offer 
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-10 max-w-200 mx-auto">
+
+    <section class="flex gap-4 items-start">
+      <div class="flex flex-col gap-0.5">
+        <h4 class="font-mono font-bold text-2xl text-white">Francis Rodriguez</h4>
+        <h5 class="font-mono text-xl text-cyan-500 mb-3">SN0WM4N</h5>
+
+        <p class="text-[16px] text-white leading-relaxed mb-3.5 max-w-xs">
+          Message me anytime. I'm happy to receive feedback,
+          discuss projects, collaborate on ideas, and offer
           assistance whenever needed.
         </p>
-    
-        <code>rodriguezrondafrancis@gmail.com</code>
-        <span>Barcelona, Spain</span>
-        <span>Full Stack Developer & Competitive Programmer</span>
-        <span>Available for work</span>
+
+        <div class="flex flex-col gap-1.5">
+          <code class="font-mono text-[14px] text-cyan-500">rodriguezrondafrancis@gmail.com</code>
+          <span class="text-[14px] ">Barcelona, Spain</span>
+          <span class="text-[14px] ">Full Stack Developer & Competitive Programmer</span>
+        </div>
       </div>
     </section>
-    <section>
-      <form>
-        <label for="email">Your email</label>
-        <input type="text" name="email">
-        <label for="message">Message</label>
-        <input type="text" name="message">
-        <button>Send your message</button>
-      </form>
+
+    <section class="flex flex-col">
+      <label for="email" class="font-mono text-[12px] text-cyan-500 tracking-widest uppercase mb-1.5">
+        Your email
+      </label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        placeholder="you@example.com"
+        class="w-full  border border-[#303e49] rounded-lg px-3.5 py-2.5 text-[13px] text-white placeholder-[#83a3bb] outline-none focus:border-cyan-500 transition-colors mb-3"
+      />
+
+      <label for="message" class="font-mono text-[12px] text-cyan-500 tracking-widest uppercase mb-1.5">
+        Message
+      </label>
+      <textarea
+        name="message"
+        id="message"
+        placeholder="Hey, I'd love to collaborate on..."
+        rows="4"
+        class="w-full border border-[#303e49] rounded-lg px-3.5 py-2.5 text-[13px] text-white placeholder-[#83a3bb] outline-none focus:border-cyan-500 transition-colors resize-none mb-3.5"
+      ></textarea>
+
+      <button
+        type="submit"
+        class="w-full bg-cyan-500/8 border border-cyan-500/25 rounded-lg py-3 font-mono text-[11.5px] text-cyan-400 hover:bg-cyan-500/15 hover:border-cyan-500/50 hover:text-cyan-300 transition-all"
+      >
+        Send your message
+      </button>
     </section>
+
   </div>
 
-  <hr />
+  <hr class="border-[#0f1e2e] mb-5" />
 
-  { year } Francis Rodriguez. 
+  <p class="font-mono mx-auto text-center text-[10px] text-cyan-500/70">
+    {year} <span class="text-cyan-500/70">Francis Rodriguez</span>
+  </p>
+
 </footer>

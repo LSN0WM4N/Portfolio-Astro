@@ -1,6 +1,46 @@
-<main>
-  Skills
-  <br/> 
+---
+import Button from "./ui/button.astro";
 
-  <code>//TODO: Create beautiful skill icons </code>
+const skills = [
+  {
+    id: "frontend",
+    title: "Frontend",
+    items: [
+      { label: "HTML" },
+      { label: "CSS" },
+      { label: "JavaScript" },
+      { label: "Tailwind" },
+      { label: "Next.js" },
+      { label: "Astro" },
+      { label: "TypeScript" },
+      { label: "React" },
+    ],
+  },
+  {
+    id: "backend",
+    title: "Backend",
+    groups: [
+      { title: "Languages", items: ["Node.js", "Go", "Python"] },
+      { title: "Frameworks", items: ["Express", "Flask"] },
+      { title: "DB Management", items: ["MySQL", "Mongoose"] },
+    ],
+  },
+  {
+    id: "others",
+    title: "Others",
+    items: [
+      { label: "C / C++" },
+      { label: "Algorithm Design" },
+      { label: "Dynamic Programming" },
+      { label: "Problem Solving" },
+    ],
+  },
+];
+
+const allTabs = [{ id: "all", title: "All" }, ...skills];
+---
+
+<main class="flex flex-col max-w-4xl mx-auto gap-10 p-8">
+  <h3 class="text-3xl font-bold mx-auto">Skills</h3>
+
 </main>

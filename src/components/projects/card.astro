@@ -1,0 +1,61 @@
+---
+import GHIcon from "../../../public/icons/github.svg";
+
+interface Props {
+  title: string;
+  description: string;
+  github: string;
+  tech: string[];
+  featured: boolean;
+  date: string | Date | number;
+  image: string;
+}
+
+const { title, description, github, tech, date, image } = Astro.props;
+---
+
+<a
+  href={github}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <article class="
+    w-full group relative bg-[#080e16] border border-[#162030] 
+    rounded-2xl overflow-hidden flex items-center transition-all 
+    duration-300 hover:border-cyan-500/55 hover:translate-x-1"
+  >
+    <div class="
+      absolute left-0 top-0 bottom-0 w-0.5 bg-cyan-500/70 
+      opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
+    />
+
+    <div class="w-24 h-24 shrink-0 m-4 rounded-xl overflow-hidden border border-[#162030] bg-[#0d1a27]">
+      <img src={image} alt={title} class="w-full h-full object-cover" />
+    </div>
+
+    <div class="flex-1 min-w-0 py-4 pr-4 sm:pr-5">
+
+      <div class="flex items-baseline gap-2.5 mb-1.5">
+        <h2 class="font-mono font-bold text-base text-[#e2f5f9] truncate">{title}</h2>
+        <span class="font-mono text-[11px] text-[#243d52] shrink-0">{date}</span>
+      </div>
+
+      <p class="text-[13.5px] text-[#4d7a96] leading-relaxed mb-3 line-clamp-2">{description}</p>
+
+      <div class="flex items-center justify-between gap-2.5">
+        <div class="flex flex-wrap gap-1.5 flex-1 min-w-0 w-full">
+          { tech.map((t: string) => (
+            <span class="
+              font-mono text-[11px] text-cyan-500 bg-cyan-500/6 
+              border border-cyan-500/16 px-2 py-0.5 rounded-[5px] 
+              hover:bg-cyan-500/[0.14] hover:text-cyan-300 
+              transition-colors whitespace-nowrap"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>    
+    </div>
+  </article>
+</a>
