@@ -1,6 +1,7 @@
 ---
-import { Image } from "astro:assets";
-import ProfileImage from "../../public/images/sn0wm4n-profile.webp";
+import EmailIcon from "../../public/icons/email.svg";
+import PinIcon from "../../public/icons/location-pin.svg";
+import CodeIcon from "../../public/icons/code.svg";
 
 const year = new Date().getFullYear();
 ---
@@ -21,9 +22,23 @@ const year = new Date().getFullYear();
         </p>
 
         <div class="flex flex-col gap-1.5">
-          <code class="font-mono text-[14px] text-cyan-500">rodriguezrondafrancis@gmail.com</code>
-          <span class="text-[14px] ">Barcelona, Spain</span>
-          <span class="text-[14px] ">Full Stack Developer & Competitive Programmer</span>
+          <code class="font-mono text-[14px] text-cyan-500 flex gap-1 items-center">
+            <EmailIcon class="text-black stroke-cyan-500 w-4 h-4" />
+            <a
+              href="mailto:rodriguezrondafrancis@gmail.com"
+              target="_blank"
+            >
+              rodriguezrondafrancis@gmail.com
+            </a>
+          </code>
+          <span class="text-[14px] flex items-center gap-1">
+            <PinIcon class="text-cyan-500 w-4 h-4" />
+            Barcelona, Spain
+          </span>
+          <span class="text-[14px] flex items-center gap-1">
+            <CodeIcon class="text-cyan-500 w-4 h-4" />
+            Full Stack Developer & Competitive Programmer
+          </span>
         </div>
       </div>
     </section>
