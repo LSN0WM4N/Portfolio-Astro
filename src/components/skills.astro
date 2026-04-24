@@ -1,46 +1,107 @@
 ---
-import Button from "./ui/button.astro";
+import { shuffle } from "../utils/array";
 
-const skills = [
-  {
-    id: "frontend",
-    title: "Frontend",
-    items: [
-      { label: "HTML" },
-      { label: "CSS" },
-      { label: "JavaScript" },
-      { label: "Tailwind" },
-      { label: "Next.js" },
-      { label: "Astro" },
-      { label: "TypeScript" },
-      { label: "React" },
-    ],
-  },
-  {
-    id: "backend",
-    title: "Backend",
-    groups: [
-      { title: "Languages", items: ["Node.js", "Go", "Python"] },
-      { title: "Frameworks", items: ["Express", "Flask"] },
-      { title: "DB Management", items: ["MySQL", "Mongoose"] },
-    ],
-  },
-  {
-    id: "others",
-    title: "Others",
-    items: [
-      { label: "C / C++" },
-      { label: "Algorithm Design" },
-      { label: "Dynamic Programming" },
-      { label: "Problem Solving" },
-    ],
-  },
-];
+const skills = shuffle([
+  { name: "Astro", icon: "/icons/skills/astro.svg" },
+  { name: "C++", icon: "/icons/skills/cplusplus.svg" },
+  { name: "C", icon: "/icons/skills/c.svg" },
+  { name: "GitHub", icon: "/icons/skills/github.svg" },
+  { name: "Git", icon: "/icons/skills/git.svg" },
+  { name: "Go", icon: "/icons/skills/go.svg" },
+  { name: "JavaScript", icon: "/icons/skills/js.svg" },
+  { name: "MongoDB", icon: "/icons/skills/mongo.svg" },
+  { name: "MySQL", icon: "/icons/skills/mysql.svg" },
+  { name: "Next.js", icon: "/icons/skills/next.svg" },
+  { name: "Python", icon: "/icons/skills/python.svg" },
+  { name: "React", icon: "/icons/skills/react.svg" },
+  { name: "TailwindCSS", icon: "/icons/skills/tailwind.svg" },
+  { name: "TypeScript", icon: "/icons/skills/ts.svg" },
+]);
 
-const allTabs = [{ id: "all", title: "All" }, ...skills];
+const topRow = skills.slice(0, Math.ceil(skills.length / 2));
+const bottomRow = skills.slice(Math.ceil(skills.length / 2));
+
+const duplicatedTopRow = [...topRow, ...topRow];
+const duplicatedBottomRow = [...bottomRow, ...bottomRow];
 ---
 
-<main class="flex flex-col max-w-4xl mx-auto gap-10 p-8">
-  <h3 class="text-3xl font-bold mx-auto">Skills</h3>
+<section class="w-full py-16 md:py-24 overflow-hidden">
+  <h3 class="text-3xl font-bold mx-auto text-center mb-10">Skills</h3>
 
-</main>
+  <div id="carousel-wrapper" class="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <div class="pointer-events-none absolute left-0 top-0 z-20 h-full w-16 md:w-28 bg-linear-to-r from-black to-transparent"></div>
+    <div class="pointer-events-none absolute right-0 top-0 z-20 h-full w-16 md:w-28 bg-linear-to-l from-black to-transparent"></div>
+
+    <div class="space-y-2">
+      <div class="overflow-hidden">
+        <div id="track-top" class="flex w-max gap-4 md:gap-6 pt-8" style="will-change: transform;">
+          {duplicatedTopRow.map((skill) => (
+            <div class="skill-card flex items-center justify-center" style={`min-width: 110px; will-change: transform;`}>
+              <img src={skill.icon} alt={skill.name} class="h-10 w-10 md:h-14 md:w-14 object-contain" loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="overflow-hidden">
+        <div id="track-bottom" class="flex w-max gap-4 md:gap-6 pb-8" style="will-change: transform;">
+          {duplicatedBottomRow.map((skill) => (
+            <div class="skill-card flex items-center justify-center" style={`min-width: 110px; will-change: transform;`}>
+              <img src={skill.icon} alt={skill.name} class="h-10 w-10 md:h-14 md:w-14 object-contain" loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const CARD_WIDTH = 110;
+  const GAP = 24;
+  const STEP = CARD_WIDTH + GAP;
+
+  const wrapper = document.getElementById('carousel-wrapper')!;
+  const trackTop = document.getElementById('track-top')!;
+  const trackBottom = document.getElementById('track-bottom')!;
+
+  const topCount = trackTop.children.length / 2;
+  const bottomCount = trackBottom.children.length / 2;
+  const topLen = topCount * STEP;
+  const bottomLen = bottomCount * STEP;
+
+  let posTop = 0;
+  let posBottom = -bottomLen / 2;
+
+  function applyScale(trackEl: HTMLElement, isBottom: boolean) {
+    const rect = wrapper.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+
+    for (const card of trackEl.children as HTMLCollectionOf<HTMLElement>) {
+      const cardRect = card.getBoundingClientRect();
+      const cardCenter = cardRect.left + cardRect.width / 2;
+      const dist = Math.abs(cardCenter - centerX);
+      const t = Math.max(0, 1 - dist / (rect.width / 2));
+      const scale = 0.65 + 0.65 * t;
+      const ty = isBottom ? (scale - 1) * 30 : -(scale - 1) * 30;
+      card.style.transform = `scale(${scale}) translateY(${ty}px)`;
+    }
+  }
+
+  function animate() {
+    posTop -= 0.6;
+    if (posTop <= -topLen) posTop += topLen;
+    trackTop.style.transform = `translateX(${posTop}px)`;
+
+    posBottom += 0.55;
+    if (posBottom >= 0) posBottom -= bottomLen;
+    trackBottom.style.transform = `translateX(${posBottom}px)`;
+
+    applyScale(trackTop, false);
+    applyScale(trackBottom, true);
+
+    requestAnimationFrame(animate);
+  }
+
+  requestAnimationFrame(animate);
+</script>

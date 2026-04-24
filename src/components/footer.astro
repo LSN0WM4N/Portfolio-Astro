@@ -44,34 +44,38 @@ const year = new Date().getFullYear();
     </section>
 
     <section class="flex flex-col">
-      <label for="email" class="font-mono text-[12px] text-cyan-500 tracking-widest uppercase mb-1.5">
-        Your email
-      </label>
-      <input
-        type="email"
-        name="email"
-        id="email"
-        placeholder="you@example.com"
-        class="w-full  border border-[#303e49] rounded-lg px-3.5 py-2.5 text-[13px] text-white placeholder-[#83a3bb] outline-none focus:border-cyan-500 transition-colors mb-3"
-      />
 
-      <label for="message" class="font-mono text-[12px] text-cyan-500 tracking-widest uppercase mb-1.5">
-        Message
-      </label>
-      <textarea
-        name="message"
-        id="message"
-        placeholder="Hey, I'd love to collaborate on..."
-        rows="4"
-        class="w-full border border-[#303e49] rounded-lg px-3.5 py-2.5 text-[13px] text-white placeholder-[#83a3bb] outline-none focus:border-cyan-500 transition-colors resize-none mb-3.5"
-      ></textarea>
+      <form id="contact-form" novalidate>
+        <label for="email" class="font-mono text-[12px] text-cyan-500 tracking-widest uppercase mb-1.5">
+          Your email
+        </label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="you@example.com"
+          class="w-full  border border-[#303e49] rounded-lg px-3.5 py-2.5 text-[13px] text-white placeholder-[#83a3bb] outline-none focus:border-cyan-500 transition-colors mb-3"
+        />
 
-      <button
-        type="submit"
-        class="w-full bg-cyan-500/8 border border-cyan-500/25 rounded-lg py-3 font-mono text-[11.5px] text-cyan-400 hover:bg-cyan-500/15 hover:border-cyan-500/50 hover:text-cyan-300 transition-all"
-      >
-        Send your message
-      </button>
+        <label for="message" class="font-mono text-[12px] text-cyan-500 tracking-widest uppercase mb-1.5">
+          Message
+        </label>
+        <textarea
+          name="message"
+          id="message"
+          placeholder="Hey, I'd love to collaborate on..."
+          rows="4"
+          class="w-full border border-[#303e49] rounded-lg px-3.5 py-2.5 text-[13px] text-white placeholder-[#83a3bb] outline-none focus:border-cyan-500 transition-colors resize-none mb-3.5"
+        ></textarea>
+
+        <button
+          type="submit"
+          id="submit-btn"
+          class="w-full bg-cyan-500/8 border border-cyan-500/25 rounded-lg py-3 font-mono text-[11.5px] text-cyan-400 hover:bg-cyan-500/15 hover:border-cyan-500/50 hover:text-cyan-300 transition-all"
+        >
+          Send your message
+        </button>
+      </form>
     </section>
 
   </div>
@@ -83,3 +87,42 @@ const year = new Date().getFullYear();
   </p>
 
 </footer>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement;
+  const btn = document.getElementById("submit-btn") as HTMLButtonElement;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value.trim();
+
+    if (!email || !message) return;
+
+    btn.disabled = true;
+    btn.textContent = "Sending...";
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, message }),
+      });
+
+      if (res.ok) {
+        btn.textContent = "Message sent!";
+        form.reset();
+      } else {
+        btn.textContent = "Something went wrong";
+      }
+    } catch {
+      btn.textContent = "Something went wrong";
+    } finally {
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = "Send your message";
+      }, 3000);
+    }
+  });
+</script> 
