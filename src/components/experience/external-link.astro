@@ -1,0 +1,23 @@
+---
+import ExternalLink from "../../../public/icons/external-link.svg";
+
+interface Props {
+  link: string;
+}
+
+const { link } = Astro.props;
+---
+
+<div class="group flex items-center gap-2">
+  <a
+    href={link}
+    class="flex items-center gap-2 transition-transform duration-200 
+           hover:-translate-y-0.5 hover:scale-105"
+    target="_blank"
+  >
+    <span class="text-white group-hover:text-cyan-500 transition-colors duration-200">
+      Take a look
+    </span>
+    <ExternalLink class="w-4 h-4 stroke-white group-hover:stroke-cyan-500 transition-colors duration-200" />
+  </a>
+</div>

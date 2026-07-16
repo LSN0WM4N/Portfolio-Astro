@@ -1,11 +1,14 @@
 ---
+import ExternalLink from './external-link.astro';
+
 interface Props {
   date: string | [string] | [string, string];
   team: string;
+  link?: string;
   description: string;
 }
 
-const { date: rawDate, team, description } = Astro.props;
+const { date: rawDate, team, description, link } = Astro.props;
 // Ensure date is [string] | [string, string]
 const date = typeof rawDate === 'string' ? [rawDate] : rawDate;
 ---
@@ -26,6 +29,8 @@ const date = typeof rawDate === 'string' ? [rawDate] : rawDate;
       }
     </span>
   </div>
+  
+  { link && ( <ExternalLink link={ link } /> ) }
 
   <p class="text-gray-400 text-md leading-relaxed">
     { description }
